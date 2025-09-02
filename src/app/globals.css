@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    color: #fff;
+    background-color: #030712;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Remove unwanted horizontal gap */
+  html, body {
+  overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .menuLink {
+    @apply cursor-pointer hover:text-yellow-400;
+  }
+
+  .tags {
+    background-color: #0abde3;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 3px 10px;
+    display: inline-block;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px; /* thoda modern look */
+  }
+
+  .tags:last-child {
+    margin-right: 0;
+  }
+
+  .tags:nth-child(2) {
+    background-color: #a55eea;
+  }
+
+  .tags:nth-child(3) {
+    background-color: #db9f10;
+  }
+
+  .tags:nth-child(4) {
+    background-color: #eb4d4b;
+  }
+}
+
+.typewriter {
+  font-size: 32px;
+  margin-top: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid;
+  animation: typing 2s steps(20, end), blink-caret 0.75s step-end infinite;
+}
+
+/* 🔥 Typewriter animations */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: currentColor;
+  }
+}

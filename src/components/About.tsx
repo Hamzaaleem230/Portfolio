@@ -4,19 +4,17 @@ const About = () => {
   return (
     <div
       id="about"
-      className="container mx-auto pt-[30px] sm:pt-[120px] lg:pt-[250px] md:pt-[190px] px-4 sm:px-6 lg:px-8"
+      className="container px-4 sm:px-6 md:px-8 pt-16 sm:pt-24 md:pt-32"
     >
-      {/* Heading */}
       <h2
-        className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 text-center lg:text-center "
+        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 text-center md:text-left"
         data-aos="fade-left"
       >
         About Me
       </h2>
 
-      {/* Paragraph */}
       <p
-        className="text-gray-300 pt-6 leading-relaxed max-w-4xl mx-[100px] lg:mx-[300px] text-base sm:text-lg md:text-xl lg:text-center"
+        className="text-gray-300 pt-4 sm:pt-6 leading-relaxed max-w-2xl sm:max-w-3xl md:max-w-4xl text-base sm:text-lg md:text-xl mx-auto md:mx-0 text-center md:text-left"
         data-aos="fade-left"
       >
         I’m{" "}

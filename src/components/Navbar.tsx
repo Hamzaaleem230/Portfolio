@@ -5,12 +5,10 @@ import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <nav aria-label="Main navigation" className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-md text-textMain z-50 shadow-md">
+    <nav className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-md text-textMain z-50 shadow-md">
       <div className="mx-auto max-w-[1280px] flex justify-between items-center py-4 px-4 md:px-8">
         {/* Logo */}
         <div className="text-2xl font-bold text-primary cursor-pointer hover:scale-105 transition">
@@ -37,7 +35,11 @@ const Navbar = () => {
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          <AiOutlineMenu size={28} className="text-primary" />
+          {isMenuOpen ? (
+            <AiOutlineClose size={28} className="text-primary" />
+          ) : (
+            <AiOutlineMenu size={28} className="text-primary" />
+          )}
         </button>
       </div>
 
@@ -51,26 +53,17 @@ const Navbar = () => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`md:hidden fixed top-0 left-0 h-full w-[75%] max-w-[320px] bg-gray-900 shadow-lg transform transition-transform duration-300 z-50 ${
+        className={`md:hidden fixed top-0 left-0 h-full w-[75%] max-w-[320px] shadow-lg transform transition-transform duration-300 z-50 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Close Button */}
-        <button
-          className="absolute top-4 right-4 text-white focus:outline-none"
-          onClick={toggleMenu}
-          aria-label="Close menu"
-        >
-          <AiOutlineClose size={28} />
-        </button>
-
-        <ul role="menu" className="flex flex-col gap-6 py-20 px-6 text-lg text-white">
+        <ul className="flex flex-col gap-6 py-20 px-6 text-lg text-white">
           {["home", "about", "projects", "skills", "contact"].map((item) => (
-            <li role="menuitem" key={item}>
+            <li key={item}>
               <Link
                 href={`#${item}`}
                 onClick={toggleMenu}
-                className=""capitalize block transition -mt-3 sm:-mt-2 md:-mt-1 p-2 sm:p-3 md:p-3.5 lg:p-4 px-4 sm:px-5 md:px-6 w-[140px] sm:w-[160px] md:w-[180px] lg:w-[200px] rounded-sm bg-gray-900 h-full hover:text-primary md:hover:translate-x-1""
+                className="capitalize block transition -mt-3 sm:-mt-2 md:-mt-1 p-2 sm:p-3 md:p-3.5 lg:p-4 px-4 sm:px-5 md:px-6 w-[140px] sm:w-[160px] md:w-[180px] lg:w-[200px] rounded-sm bg-gray-900 h-full hover:text-primary md:hover:translate-x-1"
               >
                 {item}
               </Link>
@@ -83,4 +76,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

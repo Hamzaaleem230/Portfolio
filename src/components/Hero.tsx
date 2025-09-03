@@ -1,14 +1,11 @@
 "use client";
 import React from "react";
-import Navbar from "./Navbar";
 import { Typewriter } from "react-simple-typewriter";
 import Image from "next/image";
 
 const Hero = () => {
   return (
     <div id="hero" className="bg-no-repeat text-white">
-      <Navbar />
-
       <div className="container mx-auto grid lg:grid-cols-2 h-[calc(100vh-80px)] items-center px-4">
         {/* Image Section */}
         <div className="flex justify-center items-center mt-20 sm:mt-24 lg:mt-0">
@@ -82,4 +79,5 @@ const Hero = () => {
 };
 
 export default Hero;
+
 

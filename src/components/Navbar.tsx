@@ -33,43 +33,50 @@ const Navbar = () => {
 
         {/* Mobile Toggle Button */}
         <button
-          className="md:hidden lg:hidden focus:outline-none"
+          className={`md:hidden focus:outline-none transition ${
+          isMenuOpen ? "hidden" : "block"
+          }`}
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          {isMenuOpen ? (
-            <AiOutlineClose size={28} className="text-primary" />
-          ) : (
-            <AiOutlineMenu size={28} className="text-primary" />
-          )}
+          <AiOutlineMenu size={28} className="text-primary" />
         </button>
       </div>
 
       {/* Mobile Overlay */}
       <div
-        className={`fixed inset-0 z-40 md:hidden transition ${
-          isMenuOpen ? "visible bg-black/40" : "invisible"
-        }`}
-        onClick={toggleMenu}
+          className={`fixed inset-0 z-40 md:hidden bg-black/40 transition-opacity duration-300 ${
+          isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          }`}
+          onClick={toggleMenu}
       />
 
       {/* Mobile Sidebar */}
       <div
-        className={`md:hidden fixed top-0 right-0 h-full w-[70%] max-w-[300px] bg-gray-900 shadow-lg transform transition-transform duration-300 z-50 ${
+          className={`md:hidden fixed top-0 right-0 h-full w-[75%] max-w-[320px] bg-gray-900 shadow-lg transform transition-transform duration-300 z-50 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
-      >
-        <ul className="flex flex-col gap-6 py-10 px-6 text-lg text-white">
-           {["home", "about", "projects", "skills", "contact"].map((item) => (
-              <li key={item}>
-              <Link
-                href={`#${item}`}
-                onClick={toggleMenu}
-                className="capitalize block transition hover:text-primary hover:translate-x-1"
+        >
+      {/* Close Button */}
+        <button
+          className="absolute top-4 right-4 text-white focus:outline-none"
+          onClick={toggleMenu}
+          aria-label="Close menu"
+        >
+          <AiOutlineClose size={28} />
+        </button>
+        
+        <ul className="flex flex-col gap-6 py-20 px-6 text-lg text-white">
+          {["home", "about", "projects", "skills", "contact"].map((item) => (
+          <li key={item}>
+            <Link
+              href={`#${item}`}
+              onClick={toggleMenu}
+              className="capitalize block transition hover:text-primary hover:translate-x-1"
               >
-                {item}
-              </Link>
-            </li>
+              {item}
+            </Link>
+          </li>
           ))}
         </ul>
       </div>
@@ -78,4 +85,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 

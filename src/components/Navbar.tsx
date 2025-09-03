@@ -55,13 +55,13 @@ const Navbar = () => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`md:hidden fixed top-0 right-0 h-full w-64 bg-surface shadow-lg transform transition-transform duration-300 z-50 ${
+        className={`md:hidden fixed top-0 right-0 h-full w-[70%] max-w-[300px] bg-gray-900 shadow-lg transform transition-transform duration-300 z-50 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <ul className="flex flex-col gap-6 py-10 px-6 text-lg">
-          {["home", "about", "projects", "skills", "contact"].map((item) => (
-            <li key={item}>
+        <ul className="flex flex-col gap-6 py-10 px-6 text-lg text-white">
+           {["home", "about", "projects", "skills", "contact"].map((item) => (
+              <li key={item}>
               <Link
                 href={`#${item}`}
                 onClick={toggleMenu}
@@ -78,3 +78,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

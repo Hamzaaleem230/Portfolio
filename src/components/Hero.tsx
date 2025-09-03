@@ -11,17 +11,17 @@ const Hero = () => {
 
       <div className="container mx-auto grid lg:grid-cols-2 h-[calc(100vh-80px)] items-center px-4">
         {/* Image Section */}
-        <div className="flex justify-center items-center mt-10 lg:mt-0">
-          <div className="w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full border-4 border-[#08e95e] flex justify-center items-center bg-gray-900 shadow-xl">
-            <Image
-              src="/logo.png"
-              alt="Syed Hamza"
-              width={256}
-              height={256}
-              className="object-cover shadow-md rounded-full"
-              data-aos="fade-right"
-            />
-          </div>
+        <div className="flex justify-center items-center mt-20 sm:mt-24 lg:mt-0">
+           <div className="w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full border-4 border-[#08e95e] flex justify-center items-center bg-gray-900 shadow-xl">
+             <Image
+             src="/logo.png"
+             alt="Syed Hamza"
+             width={256}
+             height={256}
+             className="object-cover shadow-md rounded-full"
+             data-aos="fade-right"
+             />
+           </div>
         </div>
 
         {/* Text Section */}
@@ -82,3 +82,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

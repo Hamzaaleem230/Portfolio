@@ -119,7 +119,7 @@ const Contact = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="bg-accent px-5 py-2 rounded-md text-sm sm:text-base font-semibold text-gray-900 hover:bg-accent/80 transition duration-300"
+              className="bg-accent px-5 py-2 rounded-md text-sm w-full sm:w-auto font-semibold text-gray-900 hover:bg-accent/80 transition duration-300"
             >
               Send
             </button>

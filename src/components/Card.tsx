@@ -27,7 +27,7 @@ const Card: React.FC<PropsType> = ({ title, desc, img, tags }) => {
 
       {/* Content */}
       <div className="p-4 flex flex-col gap-3">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h3 className="text-xl font-semibold dark:text-white">
           {title}
         </h3>
         <p className="text-gray-600 dark:text-gray-300 text-sm">{desc}</p>
@@ -49,3 +49,4 @@ const Card: React.FC<PropsType> = ({ title, desc, img, tags }) => {
 };
 
 export default Card;
+

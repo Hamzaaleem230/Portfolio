@@ -7,13 +7,8 @@ const Contact = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSubmit = () => {
-    // Popup show karna
     setShowPopup(true);
-
-    // 2 second baad hide
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 2000);
+    setTimeout(() => setShowPopup(false), 2000);
   };
 
   return (
@@ -22,20 +17,15 @@ const Contact = () => {
       className="pt-20 mx-auto max-w-[1280px] px-6 sm:px-8 md:px-12"
     >
       <div className="grid md:grid-cols-2 gap-10">
-        {/* Left Side - Info */}
+        {/* Left Side */}
         <div className="space-y-8">
-          <h2 className="text-4xl md:text-5xl font-bold" data-aos="fade-left">
-            Get in touch
-          </h2>
-          <p
-            className="text-gray-600 text-base md:text-lg pt-2 leading-relaxed"
-            data-aos="fade-left"
-          >
+          <h2 className="text-4xl md:text-5xl font-bold">Get in touch</h2>
+          <p className="text-gray-600 text-base md:text-lg pt-2 leading-relaxed">
             Feel free to reach out if you have any questions, need help with a
             project, or just want to say hi.
           </p>
 
-          <div className="flex gap-3 items-center" data-aos="fade-left">
+          <div className="flex gap-3 items-center">
             <MdOutlineMailOutline size={28} />
             <a
               href="mailto:hamzaaleem909@gmail.com"
@@ -45,7 +35,7 @@ const Contact = () => {
             </a>
           </div>
 
-          <div className="flex gap-3 items-center" data-aos="fade-left">
+          <div className="flex gap-3 items-center">
             <BsTelephone size={28} />
             <a
               href="https://wa.me/923355475036"
@@ -63,20 +53,15 @@ const Contact = () => {
           <form
             action="https://formsubmit.co/hamzaaleem909@gmail.com"
             method="POST"
+            target="hidden_iframe"
+            onSubmit={handleSubmit}
             className="space-y-6 pb-10"
           >
-            {/* Redirect after success */}
-            <input
-              type="hidden"
-              name="_next"
-              value="https://portfolio-two-cyan-4z8b8yn7ow.vercel.app/thank_you"
-            />
-
-            {/* Prevent captcha (optional) */}
+            {/* Disable captcha */}
             <input type="hidden" name="_captcha" value="false" />
 
             {/* Name */}
-            <div className="flex flex-col gap-1" data-aos="fade-left">
+            <div className="flex flex-col gap-1">
               <label htmlFor="name" className="font-medium">
                 Name
               </label>
@@ -91,7 +76,7 @@ const Contact = () => {
             </div>
 
             {/* Email */}
-            <div className="flex flex-col gap-1" data-aos="fade-left">
+            <div className="flex flex-col gap-1">
               <label htmlFor="email" className="font-medium">
                 Email
               </label>
@@ -106,7 +91,7 @@ const Contact = () => {
             </div>
 
             {/* Message */}
-            <div className="flex flex-col gap-1" data-aos="fade-left">
+            <div className="flex flex-col gap-1">
               <label htmlFor="msg" className="font-medium">
                 Message
               </label>
@@ -120,14 +105,18 @@ const Contact = () => {
               ></textarea>
             </div>
 
-            {/* Submit Button */}
+            {/* Button */}
             <button
               type="submit"
-              className="bg-accent px-5 py-2 rounded-md text-sm sm:text-base font-semibold text-gray-900 hover:bg-accent/80 transition duration-300"
+              className="bg-accent w-full sm:w-auto px-4 py-2 sm:px-5 sm:py-2 md:px-6 md:py-2.5rounded-md text-sm sm:text-base md:text-base 
+             font-semibold text-gray-900 hover:bg-accent/80 transition duration-300"
             >
               Send
             </button>
           </form>
+
+          {/* Hidden iframe (no redirect) */}
+          <iframe name="hidden_iframe" style={{ display: "none" }}></iframe>
         </div>
       </div>
 

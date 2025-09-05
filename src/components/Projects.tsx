@@ -66,7 +66,7 @@ const data = [
 
 const Projects = () => {
   return (
-    <div id="projects" className="container px-4 sm:px-[-10px] md:px-8 pt-[210px] text-cyan-300">
+    <div id="projects" className="container px-4 sm:px-[-10px] md:px-8 pt-[214px] text-cyan-300">
       <Heading title="My Projects" />
       <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 xl:grid-cols-3 place-items-center pt-14">
         {data.map((el) => (
@@ -96,5 +96,6 @@ const Projects = () => {
 };
 
 export default Projects;
+
 
 

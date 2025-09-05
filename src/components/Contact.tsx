@@ -1,8 +1,21 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { BsTelephone } from "react-icons/bs";
 
 const Contact = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleSubmit = () => {
+    // Popup show karna
+    setShowPopup(true);
+
+    // 2 second baad hide
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 2000);
+  };
+
   return (
     <div
       id="contact"
@@ -25,10 +38,10 @@ const Contact = () => {
           <div className="flex gap-3 items-center" data-aos="fade-left">
             <MdOutlineMailOutline size={28} />
             <a
-              href="mailto:syedhamzaaleem@gmail.com"
+              href="mailto:hamzaaleem909@gmail.com"
               className="hover:underline text-blue-500 break-all"
             >
-              syedhamzaaleem@gmail.com
+              hamzaaleem909@gmail.com
             </a>
           </div>
 
@@ -47,48 +60,88 @@ const Contact = () => {
 
         {/* Right Side - Form */}
         <div className="space-y-6">
-          <div className="flex flex-col gap-1" data-aos="fade-left">
-            <label htmlFor="name" className="font-medium">
-              Name
-            </label>
+          <form
+            action="https://formsubmit.co/hamzaaleem909@gmail.com"
+            method="POST"
+            className="space-y-6 pb-10"
+          >
+            {/* Redirect after success */}
             <input
-              type="text"
-              placeholder="Enter your name"
-              className="h-[40px] w-full pl-4 bg-transparent border border-accent rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50"
-              id="name"
+              type="hidden"
+              name="_next"
+              value="https://portfolio-two-cyan-4z8b8yn7ow.vercel.app/thank_you"
             />
-          </div>
-          <div className="flex flex-col gap-1" data-aos="fade-left">
-            <label htmlFor="email" className="font-medium">
-              Email
-            </label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="h-[40px] w-full pl-4 bg-transparent border border-accent rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50"
-              id="email"
-            />
-          </div>
-          <div className="flex flex-col gap-1" data-aos="fade-left">
-            <label htmlFor="msg" className="font-medium">
-              Message
-            </label>
-            <textarea
-              placeholder="Write your message..."
-              className="bg-transparent w-full pl-4 pt-3 border border-accent rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50"
-              id="msg"
-              rows={6}
-            ></textarea>
-          </div>
-          <form className="pb-10">
+
+            {/* Prevent captcha (optional) */}
+            <input type="hidden" name="_captcha" value="false" />
+
+            {/* Name */}
+            <div className="flex flex-col gap-1" data-aos="fade-left">
+              <label htmlFor="name" className="font-medium">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                className="h-[40px] w-full pl-4 bg-transparent border border-accent rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50"
+                id="name"
+                required
+              />
+            </div>
+
+            {/* Email */}
+            <div className="flex flex-col gap-1" data-aos="fade-left">
+              <label htmlFor="email" className="font-medium">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                className="h-[40px] w-full pl-4 bg-transparent border border-accent rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50"
+                id="email"
+                required
+              />
+            </div>
+
+            {/* Message */}
+            <div className="flex flex-col gap-1" data-aos="fade-left">
+              <label htmlFor="msg" className="font-medium">
+                Message
+              </label>
+              <textarea
+                name="message"
+                placeholder="Write your message..."
+                className="bg-transparent w-full pl-4 pt-3 border border-accent rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50"
+                id="msg"
+                rows={6}
+                required
+              ></textarea>
+            </div>
+
+            {/* Submit Button */}
             <button
-              className="bg-accent p-3 px-8 rounded-xl text-gray-900 text-base font-semibold hover:bg-accent/80 transition duration-300"
-              data-aos="fade-left"
+              type="submit"
+              className="bg-accent px-5 py-2 rounded-md text-sm sm:text-base font-semibold text-gray-900 hover:bg-accent/80 transition duration-300"
             >
               Send
             </button>
           </form>
         </div>
+      </div>
+
+      {/* Popup */}
+      <div
+        className={`fixed top-[11%] left-1/2 -translate-x-1/2 
+        text-gray-900 text-sm sm:text-base bg-green-500 font-medium
+        rounded-lg shadow-lg px-6 py-3 
+        transition-all duration-500 ease-in-out
+        ${
+          showPopup ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-12"
+        }`}
+      >
+        ✅ Message sent
       </div>
     </div>
   );

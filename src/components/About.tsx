@@ -4,7 +4,7 @@ const About = () => {
   return (
     <div
       id="about"
-      className="container px-4 sm:px-6 md:px-8 pt-16 sm:pt-24 md:pt-32"
+      className="container px-4 sm:px-6 md:px-8 pt-32 sm:pt-36 md:pt-32"
     >
       <h2
         className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 text-center"
@@ -40,3 +40,4 @@ const About = () => {
 };
 
 export default About;
+

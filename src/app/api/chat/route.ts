@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
     const data = await res.json();
     return NextResponse.json({ reply: data.reply });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ reply: "⚠️ Error: Backend not responding" });
   }
 }

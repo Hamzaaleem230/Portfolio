@@ -118,8 +118,9 @@ export default function ChatAssistant() {
               {/* Header */}
               <div className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700 rounded-t-2xl sm:rounded-none">
                 <h2 className="text-lg font-semibold text-primary">
-                  🤖 Hamza&apos s AI Assistant
+                  🤖 Hamza&apos;s AI Assistant
                 </h2>
+
                 <div className="flex items-center gap-3">
                   <button onClick={clearChat}>
                     <Trash2 size={20} className="text-gray-400 hover:text-red-400" />
@@ -188,3 +189,4 @@ export default function ChatAssistant() {
     </div>
   );
 }
+

@@ -109,8 +109,7 @@ export default function ChatAssistant() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute top-3 left-4 right-4 bg-green-500 text-gray-900 font-medium px-4 py-2 rounded-lg shadow-lg text-center mx-auto w-fit z-[60]"
-                  >
+                    className="absolute top-3 left-4 right-4 bg-green-500 text-gray-900 font-medium px-4 py-2 rounded-lg shadow-lg text-center mx-auto w-fit z-[60]">
                     ☑️ Chat deleted successfully!
                   </motion.div>
                 )}
@@ -119,7 +118,7 @@ export default function ChatAssistant() {
               {/* Header */}
               <div className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700 rounded-t-2xl sm:rounded-none">
                 <h2 className="text-lg font-semibold text-primary">
-                  🤖 Hamza's AI Assistant
+                  🤖 Hamza&apos s AI Assistant
                 </h2>
                 <div className="flex items-center gap-3">
                   <button onClick={clearChat}>

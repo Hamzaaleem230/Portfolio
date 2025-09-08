@@ -97,7 +97,7 @@ export default function ChatAssistant() {
             exit={isMobile ? { y: "100%" } : { x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
             className={`fixed bg-gray-900 text-white shadow-2xl z-50 flex flex-col
-              ${isMobile ? "bottom-0 left-0 w-full h-[85%] rounded-t-2xl" : "top-0 right-0 h-full w-full sm:w-[400px]"}`}
+              ${isMobile ? "bottom-0 left-0 w-full h-[90%] rounded-t-2xl" : "top-0 right-0 h-full w-full sm:w-[400px]"}`}
           >
             <div className="relative flex flex-col h-full">
               {/* Popup */}
@@ -189,5 +189,6 @@ export default function ChatAssistant() {
     </div>
   );
 }
+
 
 

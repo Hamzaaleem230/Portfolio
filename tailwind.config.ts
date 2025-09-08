@@ -13,13 +13,13 @@ const config: Config = {
         padding: "15px",
       },
       colors: {
-        background: "#0D1117",   // Dark navy - overall background
-        surface: "#161B22",      // Section / card background
+        background: "#0D1117",   // Dark navy - main background
+        surface: "#161B22",      // Card/section background
         primary: "#00E0FF",      // Futuristic cyan
-        secondary: "#6C63FF",    // AI purple
-        accent: "#08E95E",       // Bright emerald green (tumhara pehla accent)
-        textMain: "#E6E6E6",     // Main text
-        textMuted: "#A1A1AA",    // Muted / secondary text
+        secondary: "#6C63FF",    // Purple accent
+        accent: "#08E95E",       // Emerald green (primary accent)
+        textMain: "#E6E6E6",     // Main text (light gray/white)
+        textMuted: "#A1A1AA",    // Secondary / muted text
       },
     },
   },

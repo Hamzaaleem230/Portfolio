@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import ChatAssistant from "@/components/ChatAssistant"; // 👈 add this line
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,35 +17,12 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Syed Hamza | Portfolio",
-  description:
-    "Full-Stack Developer & AI Engineer – Explore my projects, skills, and contact details.",
-  keywords: [
-    "Portfolio",
-    "Web Developer",
-    "Frontend Developer",
-    "AI Engineer",
-    "Next.js",
-    "React",
-  ],
-  authors: [{ name: "Syed Hamza" }],
-  openGraph: {
-    title: "Syed Hamza | Portfolio",
-    description:
-      "Explore my projects, skills, and contact details in this modern portfolio.",
-    url: "https://your-portfolio-link.com", // apna link dal dena
-    siteName: "Syed Hamza Portfolio",
-    images: [
-      {
-        url: "/og-image.png", // ek preview image bana lena
-        width: 1200,
-        height: 630,
-        alt: "Portfolio Preview",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
+  description: "Full-Stack Developer & AI Engineer – Explore my projects, skills, and contact details.",
+  icons: {
+    icon: "/my_logo.png",
   },
 };
+
 
 export default function RootLayout({
   children,
@@ -58,6 +36,7 @@ export default function RootLayout({
       >
         <div className="flex-grow">{children}</div>
         <Footer />
+        <ChatAssistant /> {/* 👈 assistant globaly yahan inject ho gaya */}
       </body>
     </html>
   );

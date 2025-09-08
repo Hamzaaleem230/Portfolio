@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
+import ChatAssistant from "@/components/ChatAssistant";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -30,6 +31,9 @@ export default function Home() {
       <Projects />
       <Skills />
       <Contact />
+
+      {/* Chat Assistant */}
+      <ChatAssistant />
     </main>
   );
 }

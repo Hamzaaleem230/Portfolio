@@ -45,7 +45,7 @@ Rules:
 
     const reply =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ??
-      "⚠️ Sorry, I can only answer Hamza-related queries.";
+      "Error aa gaya, dobara try karein.";
 
     return new Response(JSON.stringify({ reply }), {
       status: 200,
@@ -58,4 +58,5 @@ Rules:
     });
   }
 }
+
 

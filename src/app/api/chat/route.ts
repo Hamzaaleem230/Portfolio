@@ -3,12 +3,24 @@ import { profile } from "../../lib/profile";
 
 export const runtime = "edge";
 
+// Simple in-memory session store (fixed for user_1)
+const sessionStore: Record<string, any[]> = {
+  user_1: [],
+};
+
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
-  
+    const userId = "user_1"; // ✅ fixed user id
+    if (!sessionStore[userId]) {
+      sessionStore[userId] = [];
+    }
+
     const userMsg = messages?.[messages.length - 1]?.content ?? "";
+
+    // Add user message to memory
+    sessionStore[userId].push({ role: "user", content: userMsg });
 
     const systemPrompt = `
 Tum Hamza Aleemke portfolio ka AI assistant ho.
@@ -25,19 +37,27 @@ Rules:
 2) Sirf di gayi info par based ho. Agar data nahi to bolo: "Ye info mere paas nahi."
 `;
 
+    // Prepare history
+    const history = sessionStore[userId].map((m) => ({
+      role: m.role,
+      parts: [{ text: m.content }],
+    }));
+
+    // Inject system prompt at start
+    const finalInput = [
+      {
+        role: "user",
+        parts: [{ text: systemPrompt }],
+      },
+      ...history,
+    ];
+
     const res = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: `${systemPrompt}\nUser: ${userMsg}` }],
-            },
-          ],
-        }),
+        body: JSON.stringify({ contents: finalInput }),
       }
     );
 
@@ -47,7 +67,10 @@ Rules:
       data?.candidates?.[0]?.content?.parts?.[0]?.text ??
       "Error aa gaya, dobara try karein.";
 
-    return new Response(JSON.stringify({ reply }), {
+    // Save assistant reply
+    sessionStore[userId].push({ role: "assistant", content: reply });
+
+    return new Response(JSON.stringify({ reply, userId }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });

@@ -3,24 +3,11 @@ import { profile } from "../../lib/profile";
 
 export const runtime = "edge";
 
-// Simple in-memory session store (fixed for user_1)
-const sessionStore: Record<string, any[]> = {
-  user_1: [],
-};
-
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
-    const userId = "user_1"; // ✅ fixed user id
-    if (!sessionStore[userId]) {
-      sessionStore[userId] = [];
-    }
-
     const userMsg = messages?.[messages.length - 1]?.content ?? "";
-
-    // Add user message to memory
-    sessionStore[userId].push({ role: "user", content: userMsg });
 
     const systemPrompt = `
 Tum Hamza Aleemke portfolio ka AI assistant ho.
@@ -37,13 +24,12 @@ Rules:
 2) Sirf di gayi info par based ho. Agar data nahi to bolo: "Ye info mere paas nahi."
 `;
 
-    // Prepare history
-    const history = sessionStore[userId].map((m) => ({
-      role: m.role,
+    // Convert frontend messages into Gemini format
+    const history = messages.map((m: any) => ({
+      role: m.sender === "user" ? "user" : "assistant",
       parts: [{ text: m.content }],
     }));
 
-    // Inject system prompt at start
     const finalInput = [
       {
         role: "user",
@@ -67,10 +53,7 @@ Rules:
       data?.candidates?.[0]?.content?.parts?.[0]?.text ??
       "Error aa gaya, dobara try karein.";
 
-    // Save assistant reply
-    sessionStore[userId].push({ role: "assistant", content: reply });
-
-    return new Response(JSON.stringify({ reply, userId }), {
+    return new Response(JSON.stringify({ reply }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });

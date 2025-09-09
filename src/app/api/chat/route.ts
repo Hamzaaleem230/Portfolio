@@ -1,18 +1,60 @@
-import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { profile } from "../../lib/profile";
 
-export async function POST(req: Request) {
-  const { message } = await req.json();
+export const runtime = "edge";
 
+export async function POST(req: NextRequest) {
   try {
-    const res = await fetch("http://127.0.0.1:8000/get_reply", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message }),
-    });
+    const { messages } = await req.json();
+
+    // Get last user message
+    const userMsg = messages?.[messages.length - 1]?.content ?? "";
+
+    const systemPrompt = `
+Tum Hamza Aleemke portfolio ka AI assistant ho.
+- Name: ${profile.name}
+- Role: ${profile.role}
+- Skills: ${profile.skills.join(", ")}
+- Services: ${profile.services.join(", ")}
+- Experience: ${profile.experience.join(" | ")}
+- Projects: ${profile.projects.map((p) => p.name).join(", ")}
+- Contact: Email ${profile.contact.email}
+
+Rules:
+1) Roman English me jawab do, friendly & professional.
+2) Sirf di gayi info par based ho. Agar data nahi to bolo: "Ye info mere paas nahi."
+`;
+
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: `${systemPrompt}\nUser: ${userMsg}` }],
+            },
+          ],
+        }),
+      }
+    );
 
     const data = await res.json();
-    return NextResponse.json({ reply: data.reply });
-  } catch {
-    return NextResponse.json({ reply: "⚠️ Error: Backend not responding" });
+
+    const reply =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ??
+      "Error aa gaya, dobara try karein.";
+
+    return new Response(JSON.stringify({ reply }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (err) {
+    console.error(err);
+    return new Response(JSON.stringify({ error: "Server error" }), {
+      status: 500,
+    });
   }
 }

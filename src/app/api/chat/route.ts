@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
-    // Get last user message
+  
     const userMsg = messages?.[messages.length - 1]?.content ?? "";
 
     const systemPrompt = `

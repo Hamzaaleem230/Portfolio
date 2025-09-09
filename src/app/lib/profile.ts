@@ -23,5 +23,5 @@ export const profile = {
     linkedin: "https://www.linkedin.com/in/syed-hamza-aleem/",
     number: "+923355475036",
   },
-
 };
+

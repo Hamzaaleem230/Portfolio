@@ -1,4 +1,3 @@
-
 export const profile = {
   name: "Syed Hamza Aleem",
   role: "Full-Stack / Agentic AI Developer",
@@ -18,6 +17,6 @@ export const profile = {
     { name: "Travel Agency UI", link: "#" },
   ],
   contact: {
-    email: "hamzaalem909@gmail.com",
+    email: "hamzaaleem909@gmail.com",
   },
 };

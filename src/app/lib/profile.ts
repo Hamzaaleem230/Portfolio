@@ -19,9 +19,5 @@ export const profile = {
   ],
   contact: {
     email: "hamzaalem909@gmail.com",
-    github: "https://github.com/Hamzaaleem230",
-    linkedin: "https://www.linkedin.com/in/syed-hamza-aleem/",
-    number: "+923355475036",
   },
 };
-

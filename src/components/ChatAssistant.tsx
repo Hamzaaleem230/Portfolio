@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MessageSquare, Trash2 } from "lucide-react";
 
+
 export default function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ sender: "bot" | "user"; text: string }[]>([
@@ -120,7 +121,6 @@ export default function ChatAssistant() {
                 <h2 className="text-lg font-semibold text-primary">
                   🤖 Hamza&apos;s AI Assistant
                 </h2>
-
                 <div className="flex items-center gap-3">
                   <button onClick={clearChat}>
                     <Trash2 size={20} className="text-gray-400 hover:text-red-400" />
@@ -189,7 +189,3 @@ export default function ChatAssistant() {
     </div>
   );
 }
-
-
-
-

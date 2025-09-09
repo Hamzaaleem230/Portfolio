@@ -49,4 +49,3 @@ const Card: React.FC<PropsType> = ({ title, desc, img, tags }) => {
 };
 
 export default Card;
-

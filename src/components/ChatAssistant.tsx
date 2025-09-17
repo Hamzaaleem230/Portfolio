@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageSquare, Trash2 } from "lucide-react";
+import { X, MessageSquare, Trash2, Mic, ArrowLeft } from "lucide-react";
 
 export default function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +17,8 @@ export default function ChatAssistant() {
   const [isTyping, setIsTyping] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Detect screen size
@@ -31,6 +33,51 @@ export default function ChatAssistant() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Init SpeechRecognition
+  const initRecognition = () => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert("Speech Recognition not supported in your browser.");
+      return null;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US"; // Urdu support: "ur-PK"
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[event.results.length - 1][0].transcript;
+      setInput(transcript);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    return recognition;
+  };
+
+  // Start listening
+  const startListening = () => {
+    if (isListening) return;
+    const recognition = initRecognition();
+    if (recognition) {
+      recognitionRef.current = recognition;
+      recognition.start();
+      setIsListening(true);
+    }
+  };
+
+  // Stop listening
+  const stopListening = () => {
+    recognitionRef.current?.stop();
+    setIsListening(false);
+  };
 
   // Send message
   const sendMessage = async () => {
@@ -184,18 +231,45 @@ export default function ChatAssistant() {
               </div>
 
               {/* Input */}
-              <div className="p-3 border-t border-gray-700 bg-gray-800 flex gap-2 rounded-b-2xl sm:rounded-none">
+              <div className="p-3 border-t border-gray-700 bg-gray-800 flex gap-2 items-center rounded-b-2xl sm:rounded-none">
+                {isListening && (
+                  <button
+                    onClick={stopListening}
+                    className="text-white bg-gray-600 hover:bg-gray-700 p-2 rounded-lg"
+                  >
+                    <ArrowLeft size={20} />
+                  </button>
+                )}
+
                 <input
                   type="text"
-                  placeholder="Type your message..."
+                  placeholder={
+                    isListening
+                      ? input
+                        ? "Listening..."
+                        : "Speak now..."
+                      : "Type your message..."
+                  }
                   className="flex-1 rounded-lg px-3 py-2 bg-gray-700 text-white outline-none"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                 />
+
+                <button
+                  onClick={isListening ? stopListening : startListening}
+                  className={`${
+                    isListening
+                      ? "bg-gray-900 text-red-500"
+                      : "bg-blue-500 text-white hover:bg-blue-600"
+                  } font-semibold p-2 rounded-lg`}
+                >
+                  <Mic size={20} />
+                </button>
+
                 <button
                   onClick={sendMessage}
-                  className="bg-green-500 text-gray-900 font-semibold hover:bg-green-600 px-4 rounded-lg"
+                  className="bg-green-500 text-gray-900 font-semibold hover:bg-green-600 px-2 py-2 rounded-lg"
                 >
                   Send
                 </button>

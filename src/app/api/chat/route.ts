@@ -1,8 +1,6 @@
 import { NextRequest } from "next/server";
 import { profile } from "../../lib/profile";
 
-export const runtime = "edge";
-
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
@@ -25,7 +23,7 @@ Rules:
     const userMsg = messages?.[messages.length - 1]?.content ?? "";
 
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -41,17 +39,18 @@ Rules:
     );
 
     const data = await res.json();
+    console.log("Gemini API Response:", JSON.stringify(data, null, 2)); // 👈 Debug
 
     const reply =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ??
-      "Error aa gaya, dobara try karein.";
+      "⚠️ Error aa gaya, dubara try karain.";
 
     return new Response(JSON.stringify({ reply }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    console.log(err);
+    console.error("Server error:", err);
     return new Response(JSON.stringify({ error: "Server error" }), {
       status: 500,
     });

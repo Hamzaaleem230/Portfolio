@@ -19,13 +19,12 @@ const About = () => {
       >
         I’m <span className="font-semibold text-white">Syed Hamza Aleem</span>,
         a passionate
-        <span className="text-green-400"> Full-Stack Developer</span>,
+        <span className="text-green-400"> Frontend Developer</span>,
         <span className="text-blue-400"> Agentic AI Developer</span>,
         <span className="text-purple-400"> Web Developer</span>, and
-        <span className="text-pink-400"> UI/UX Designer</span> with over{" "}
-        <span className="font-semibold">4+ years of experience</span>.
-        Currently, I’m pursuing advanced IT education at
-        <span className="text-yellow-400"> Governor House GIAIC</span>, focusing
+        <span className="text-pink-400"> UI Designer</span> with over{" "}
+        <span className="font-semibold">3+ years of experience</span>.
+        Currently, I’m pursuing advanced IT education, focusing
         on mastering
         <span className="text-cyan-400"> OpenAI Agents SDK</span> along with
         JavaScript, Python, and OOPs.

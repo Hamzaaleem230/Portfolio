@@ -2,7 +2,6 @@ from agents import Agent
 from my_config.gemini_config import GEMINI_MODEL
 from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
 from guardrial_function.guardrial_input_function import guardrial_input_function
-# from guardrial_function.guardrial_output_function import guardrial_output_function
 
 # Skills Agent
 HamzaSkillsAgent: Agent = Agent(
@@ -87,6 +86,5 @@ HamzaAgent: Agent = Agent(
     """,
     model=GEMINI_MODEL,
     handoffs=[HamzaSkillsAgent, HamzaAboutAgent, HamzaProjectsAgent],
-    input_guardrails=[guardrial_input_function],
-    # output_guardrails=[guardrial_output_function]
+    input_guardrails=[guardrial_input_function]
 )

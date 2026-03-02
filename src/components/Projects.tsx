@@ -5,7 +5,7 @@ import Link from "next/link";
 const data = [
   {
     id: 1,
-    title: "🛒 E-Commerce Interface",
+    title: "🛒 Electronics E-Commerce Store",
     desc: "Developed a Next.js UI storefront template with API integration and dynamic data rendering for e-commerce features like promotional banners.",
     img: "/e-commerce.png",
     tags: [
@@ -15,13 +15,13 @@ const data = [
       "API Integration",
       "E-Commerce UI",
     ],
-    link: "https://hackathon-3-api-integration-38sh.vercel.app/",
+    link: "https://ecommerce-website-iota-lake.vercel.app/",
   },
   {
     id: 2,
-    title: "🧩 PixelCraft",
+    title: "🧩 Clothes E-Commerce Store",
     desc: "PixelCraft is a UI/UX design project built in Figma, focused on creating a clean, responsive, and user-friendly interface also showcases a layout structure.",
-    img: "/pixel_craft.jpg",
+    img: "/e-commerce.png",
     tags: ["Html", "CSS", "Python", "OpenAI Agent SDK", "Next.js", "TailwindCSS"],
     link: "https://figmadesign-sage.vercel.app/",
   },

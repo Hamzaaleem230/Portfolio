@@ -45,9 +45,9 @@ const Hero = () => {
           >
             <Typewriter
               words={[
-                "Full-Stack Developer",
+                "Frontend Developer",
                 "Agentic AI Developer",
-                "UI/UX Designer",
+                "UI Designer",
               ]}
               loop={true}
               cursor

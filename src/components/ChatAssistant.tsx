@@ -5,7 +5,9 @@ import { X, MessageSquare, Trash2 } from "lucide-react";
 
 export default function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<{ sender: "bot" | "user"; text: string }[]>([
+  const [messages, setMessages] = useState<
+    { sender: "bot" | "user"; text: string }[]
+  >([
     {
       sender: "bot",
       text: "🤖 Hello! I'm Hamza's Assistant. Ask me about his skills, projects, or professional journey 🙂",
@@ -25,16 +27,15 @@ export default function ChatAssistant() {
     return () => window.removeEventListener("resize", checkScreen);
   }, []);
 
-  // Auto scroll
+  // Auto scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   // Send message
   const sendMessage = async () => {
-    if (!input.trim() || isTyping) return; // prevent duplicates while typing
+    if (!input.trim() || isTyping) return;
 
-    // ✅ Type-safe user message
     const userMsg = { sender: "user" as const, text: input };
     setMessages((prev) => [...prev, userMsg]);
 
@@ -46,15 +47,21 @@ export default function ChatAssistant() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userInput }),
+        body: JSON.stringify({
+          messages: [
+            ...messages.map((m) => ({
+              role: m.sender === "user" ? "user" : "assistant",
+              content: m.text,
+            })),
+            { role: "user", content: userInput },
+          ],
+        }),
       });
 
-      const data = await res.json();
+      const data: { reply: string } = await res.json();
 
-      // ✅ Single bot bubble only
       const botMsg = { sender: "bot" as const, text: data.reply };
 
-      // Delay to simulate typing
       setTimeout(() => {
         setMessages((prev) => [...prev, botMsg]);
         setIsTyping(false);
@@ -68,6 +75,7 @@ export default function ChatAssistant() {
     }
   };
 
+  // Clear chat
   const clearChat = () => {
     setMessages([
       {
@@ -97,7 +105,11 @@ export default function ChatAssistant() {
             exit={isMobile ? { y: "100%" } : { x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
             className={`fixed bg-gray-900 text-white shadow-2xl z-50 flex flex-col
-              ${isMobile ? "bottom-0 left-0 w-full h-[85%] rounded-t-2xl" : "top-0 right-0 h-full w-full sm:w-[400px]"}`}
+              ${
+                isMobile
+                  ? "bottom-0 left-0 w-full h-[90%] rounded-t-2xl"
+                  : "top-0 right-0 h-full w-full sm:w-[400px]"
+              }`}
           >
             <div className="relative flex flex-col h-full">
               {/* Popup */}
@@ -119,11 +131,14 @@ export default function ChatAssistant() {
               {/* Header */}
               <div className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700 rounded-t-2xl sm:rounded-none">
                 <h2 className="text-lg font-semibold text-primary">
-                  🤖 Hamza's AI Assistant
+                  🤖 Hamza&apos;s AI Assistant
                 </h2>
                 <div className="flex items-center gap-3">
                   <button onClick={clearChat}>
-                    <Trash2 size={20} className="text-gray-400 hover:text-red-400" />
+                    <Trash2
+                      size={20}
+                      className="text-gray-400 hover:text-red-400"
+                    />
                   </button>
                   <button onClick={() => setIsOpen(false)}>
                     <X size={24} className="text-gray-400 hover:text-red-400" />
@@ -140,10 +155,14 @@ export default function ChatAssistant() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                     className={`p-3 rounded-2xl max-w-[80%] ${
-                      msg.sender === "user" ? "ml-auto bg-green-600" : "bg-gray-700"
+                      msg.sender === "user"
+                        ? "ml-auto bg-green-600"
+                        : "bg-gray-700"
                     }`}
                   >
-                    {msg.sender === "user" ? `👨🏻‍🦱 You: ${msg.text}` : `🤖 Bot: ${msg.text}`}
+                    {msg.sender === "user"
+                      ? `👨🏻‍🦱 You: ${msg.text}`
+                      : `🤖 Bot: ${msg.text}`}
                   </motion.div>
                 ))}
 
@@ -166,7 +185,7 @@ export default function ChatAssistant() {
               </div>
 
               {/* Input */}
-              <div className="p-3 border-t border-gray-700 bg-gray-800 flex gap-2 rounded-b-2xl sm:rounded-none">
+              <div className="p-3 border-t border-gray-700 bg-gray-800 flex gap-2 items-center rounded-b-2xl sm:rounded-none">
                 <input
                   type="text"
                   placeholder="Type your message..."
@@ -177,7 +196,7 @@ export default function ChatAssistant() {
                 />
                 <button
                   onClick={sendMessage}
-                  className="bg-green-500 text-gray-900 font-semibold hover:bg-green-600 px-4 rounded-lg"
+                  className="bg-green-500 text-gray-900 font-semibold hover:bg-green-600 px-3 py-2 rounded-lg"
                 >
                   Send
                 </button>

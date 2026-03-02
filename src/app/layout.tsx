@@ -17,7 +17,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Syed Hamza | Portfolio",
-  description: "Full-Stack Developer & AI Engineer – Explore my projects, skills, and contact details.",
+  description: "Frontend Developer & AI Engineer – Explore my projects, skills, and contact details.",
   icons: {
     icon: "/my_logo.png",
   },

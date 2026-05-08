@@ -1,16 +1,18 @@
 import os
-import time
+import requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from google import genai
-from google.genai import errors
 
 # Load environment variables
 load_dotenv()
 
 app = FastAPI()
+
+@app.get("/")
+async def home():
+    return {"status": "Backend is running!"}
 
 # CORS setup
 app.add_middleware(
@@ -21,7 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- TUMHARA PROFILE CONTEXT (DO NOT REMOVE) ---
+# --- TUMHARA PROFILE CONTEXT ---
 PROFILE_CONTEXT = """
 Tum Syed Hamza Aleem ke portfolio assistant ho.
 
@@ -74,42 +76,38 @@ RULES:
 - Kabhi bhi extra assumptions ya external personalities add na karna.
 """
 
-# Gemini client setup
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-
 class ChatRequest(BaseModel):
     message: str
 
 @app.post("/chat")
 async def chat(req: ChatRequest):
-    # Hum 3 bar try karenge temporary server errors ke liye
-    for i in range(3):
-        try:
-            # Hum explicitly 'gemini-1.5-flash' use kar rahe hain
-            response = client.models.generate_content(
-                model="gemini-1.5-flash", 
-                contents=f"{PROFILE_CONTEXT}\nUser: {req.message}"
-            )
+    api_key = os.getenv("GEMINI_API_KEY")
+    
+    # Direct API URL using stable v1 endpoint
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
+    
+    headers = {'Content-Type': 'application/json'}
+    
+    payload = {
+        "contents": [{
+            "parts": [{"text": f"{PROFILE_CONTEXT}\nUser: {req.message}"}]
+        }]
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        data = response.json()
+        
+        if response.status_code == 200:
+            # Extracting the bot reply from JSON
+            bot_reply = data['candidates'][0]['content']['parts'][0]['text']
+            return {"reply": bot_reply}
+        elif response.status_code == 429:
+            return {"reply": "⚠️ Maazrat! Daily limit poori ho gayi hai. Kal try karein."}
+        else:
+            print(f"API Error: {data}")
+            return {"reply": "⚠️ AI abhi busy hai, please thori der baad try karein."}
             
-            if response and response.text:
-                return {"reply": response.text}
-            else:
-                return {"reply": "🤖 Maazrat, main is waqt jawab nahi de sakta."}
-
-        except errors.ServerError:
-            # Google server busy (500 series)
-            if i < 2: 
-                time.sleep(2)
-                continue
-            return {"reply": "⚠️ AI server is busy. Please try again in a few seconds."}
-
-        except errors.ClientError as e:
-            # 404 NOT_FOUND ya 429 QUOTA handling
-            print(f"Client Error: {e}")
-            return {"reply": "⚠️ Quota exhausted ya API configuration ka masla hai. Please check later."}
-
-        except Exception as e:
-            print(f"General Error: {e}")
-            return {"reply": f"⚠️ Technical issue: {str(e)[:50]}..." }
-
-    return {"reply": "⚠️ AI is not responding. Please try again later."}
+    except Exception as e:
+        print(f"Error: {e}")
+        return {"reply": "⚠️ Connection ka masla aa raha hai. Please try again."}

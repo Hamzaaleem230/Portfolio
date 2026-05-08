@@ -61,6 +61,7 @@ const Contact = () => {
             <a
               href="https://github.com/Hamzaaleem230"
               className="hover:underline text-blue-500 break-all"
+              target="_blank"
             >
               Github
             </a>

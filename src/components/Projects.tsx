@@ -23,7 +23,7 @@ const data = [
     desc: "PixelCraft is a UI/UX design project built in Figma, focused on creating a clean, responsive, and user-friendly interface also showcases a layout structure.",
     img: "/e-commerce.png",
     tags: ["Html", "CSS", "Python", "OpenAI Agent SDK", "Next.js", "TailwindCSS"],
-    link: "https://figmadesign-sage.vercel.app/",
+    link: "https://hackathon-3-api-integration-38sh.vercel.app/",
   },
   {
     id: 3,

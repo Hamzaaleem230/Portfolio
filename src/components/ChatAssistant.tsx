@@ -44,17 +44,11 @@ export default function ChatAssistant() {
     setIsTyping(true);
 
     try {
-      const res = await fetch("/api/chat", {
+      const res = await fetch("https://hamzasyed001122-portfolio-chatbot.hf.space/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [
-            ...messages.map((m) => ({
-              role: m.sender === "user" ? "user" : "assistant",
-              content: m.text,
-            })),
-            { role: "user", content: userInput },
-          ],
+          message: userInput,
         }),
       });
 

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { BsTelephone } from "react-icons/bs";
+import { FaGithub } from "react-icons/fa";
 
 const Contact = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -52,6 +53,16 @@ const Contact = () => {
               className="hover:underline text-blue-500 break-all"
             >
               hamzaaleem909@gmail.com
+            </a>
+          </div>
+
+          <div className="flex gap-3 items-center" data-aos="fade-left">
+            <FaGithub size={28} />
+            <a
+              href="https://github.com/Hamzaaleem230"
+              className="hover:underline text-blue-500 break-all"
+            >
+              Github
             </a>
           </div>
 

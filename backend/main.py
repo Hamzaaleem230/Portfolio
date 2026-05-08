@@ -1,12 +1,27 @@
+import os
+import time
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import os
-import time
 from dotenv import load_dotenv
 from google import genai
 from google.genai import errors
 
+# Load environment variables
+load_dotenv()
+
+app = FastAPI()
+
+# CORS setup
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# --- TUMHARA PROFILE CONTEXT (DO NOT REMOVE) ---
 PROFILE_CONTEXT = """
 Tum Syed Hamza Aleem ke portfolio assistant ho.
 
@@ -59,59 +74,42 @@ RULES:
 - Kabhi bhi extra assumptions ya external personalities add na karna.
 """
 
-# Load environment variables
-load_dotenv()
-
-app = FastAPI()
-
-# CORS setup
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Gemini client
+# Gemini client setup
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-# Request schema
 class ChatRequest(BaseModel):
     message: str
-
-# Chat endpoint
-from google.genai import errors
-import time
 
 @app.post("/chat")
 async def chat(req: ChatRequest):
     # Hum 3 bar try karenge temporary server errors ke liye
     for i in range(3):
         try:
+            # Hum explicitly 'gemini-1.5-flash' use kar rahe hain
             response = client.models.generate_content(
                 model="gemini-1.5-flash", 
                 contents=f"{PROFILE_CONTEXT}\nUser: {req.message}"
             )
             
-            # Agar success ho jaye toh response return kar do
-            return {"reply": response.text}
+            if response and response.text:
+                return {"reply": response.text}
+            else:
+                return {"reply": "🤖 Maazrat, main is waqt jawab nahi de sakta."}
 
         except errors.ServerError:
-            # Agar Google ka server down ya busy hai (500 series error)
+            # Google server busy (500 series)
             if i < 2: 
                 time.sleep(2)
                 continue
-            return {"reply": "⚠️ AI server is currently busy. Please try again after a few seconds."}
+            return {"reply": "⚠️ AI server is busy. Please try again in a few seconds."}
 
         except errors.ClientError as e:
-            # Agar Quota khatam ho (429) ya API key ka masla ho
-            print(f"Quota/Client Error: {e}")
-            return {"reply": "⚠️ Maazrat! Daily limit poori ho gayi hai ya server busy hai. Thori der baad try karein."}
+            # 404 NOT_FOUND ya 429 QUOTA handling
+            print(f"Client Error: {e}")
+            return {"reply": "⚠️ Quota exhausted ya API configuration ka masla hai. Please check later."}
 
         except Exception as e:
-            # Kisi bhi aur tarah ke unexpected error ke liye
             print(f"General Error: {e}")
             return {"reply": f"⚠️ Technical issue: {str(e)[:50]}..." }
 
-    return {"reply": "⚠️ AI is not responding right now. Please try again later."}
+    return {"reply": "⚠️ AI is not responding. Please try again later."}
